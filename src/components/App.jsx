@@ -27,13 +27,15 @@ export default function App() {
     localStorage.setItem('contacts', JSON.stringify(contacts))
   }, [contacts]);
 
-  const addNewContact = (newContact, {action}) => {
+  const addNewContact = (newContact, { actions }) => {
     const existName = contacts.map(el => el.name.toLowerCase());
 
     return existName.includes(newContact.name.toLowerCase()) ?
       alert(`${newContact.name} is already in contacts`) :
-      setContacts(prevState => [...prevState, newContact]);
-        action.resetForm();
+      setContacts(prevState => {
+        actions.resetForm()
+        return [...prevState, newContact]
+      });
       }
 
     
@@ -52,9 +54,6 @@ export default function App() {
     const changeFilter = e => {
     setFilter(e.currentTarget.value);
   };
-
-
-  
 
     return (
       <Section>
